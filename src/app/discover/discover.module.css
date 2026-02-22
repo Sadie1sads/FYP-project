@@ -1,0 +1,119 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;    
+  width: 100%;         
+}
+
+.main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  min-width: 0;
+  margin-left: 6rem;  
+  box-sizing: border-box;
+}
+
+.heading {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.content {
+  display: flex;
+  gap: 16px;
+  height: 500px;
+  min-width: 0;
+}
+
+.mapWrapper {
+  flex: 1;
+  height: 500px;       
+  min-width: 0;        
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;  
+}
+
+.locationList {
+  width: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.locationCard {
+  border: 2px solid #eee;
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.locationCard.active,
+.locationCard:hover {
+  border-color: #4f46e5;
+}
+
+.locationCard h3 {
+  font-size: 0.9rem;
+  margin: 0 0 4px;
+}
+
+.locationCard p {
+  font-size: 0.75rem;
+  color: #888;
+  margin: 0;
+}
+
+.thumb {
+  width: 100%;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+
+.selectedPosts {
+  margin-top: 32px;
+}
+
+.selectedPosts h2 {
+  margin-bottom: 16px;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.postCard {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.postCard img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.postCard p {
+  padding: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.postCard span {
+  padding: 0 8px 8px;
+  font-size: 0.8rem;
+  color: #888;
+}

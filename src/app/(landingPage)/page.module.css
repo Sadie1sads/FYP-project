@@ -1,0 +1,52 @@
+.heroSection {
+  height: 90vh;
+  background-image: url('/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+}
+
+.heroContent h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.heroContent h2 {
+  font-size: 24px;
+  color: #002651;
+  margin-bottom: 20px;
+}
+
+.heroContent p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.getStartedBtn{
+  margin-top: 10px;
+  background-color: transparent;
+  color: #002651;
+  border: 1px solid #002651;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+  box-shadow: 1px 1px 2px #002651;
+}
+
+.getStartedBtn:hover{
+  color: white;
+  background-color: #002651;
+  border: 1px solid #002651;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+  box-shadow: 1px 1px 2px #002651;
+}

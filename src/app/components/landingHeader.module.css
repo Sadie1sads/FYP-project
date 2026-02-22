@@ -1,0 +1,57 @@
+.mainHeader {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.8);
+  z-index: 1000;
+}
+
+.headerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #002651;
+}
+
+.centerNav {
+  display: flex;
+  gap: 24px;
+}
+
+.rightGroup {
+  display: flex;
+  gap: 16px;
+}
+
+.navSignup,
+.navLogin {
+  color: #002651;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.navSignup:hover,
+.navLogin:hover {
+  color: #002651;
+}
+
+.navItem {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.navItem:hover {
+  color: #002651;
+}

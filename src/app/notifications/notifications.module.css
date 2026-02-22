@@ -1,0 +1,76 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main {
+  margin-left: 6rem;
+  padding: 60px;
+  flex: 1;
+}
+
+.main h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.hint {
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.item.read {
+  opacity: 0.7;
+  background: #f9f9f9;
+}
+
+.message {
+  margin: 0 0 8px 0;
+  font-size: 15px;
+}
+
+.link {
+  color: #002651;
+  font-size: 14px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.markRead {
+  padding: 6px 12px;
+  border: 1px solid #002651;
+  background: white;
+  color: #002651;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.markRead:hover {
+  background: #002651;
+  color: white;
+}
+
+.empty {
+  color: #888;
+  font-style: italic;
+}
