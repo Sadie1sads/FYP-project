@@ -25,7 +25,7 @@ type Post = {
   createdAt: string
 }
 
-/** Summary card for Discover and Trending section */
+/* Summary card for Discover and Trending section */
 function PostSummaryCard({
   post,
   savedPostIds,

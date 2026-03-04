@@ -5,6 +5,11 @@ import Notification from '@/models/notificationModel'
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from "jsonwebtoken"
 
+
+declare global {
+  var io: import('socket.io').Server | undefined
+}
+
 connect()
 
 function cleanLocation(name: string) {
@@ -65,14 +70,27 @@ export async function POST(request:NextRequest){
         userId: { $ne: decodedToken.id },
         }).lean()
 
-        //Send notification to those users
+        // Send notification to those users
         for (const wl of wishlists) {
-            await Notification.create({
+            const notif = await Notification.create({
                 userId: wl.userId,
                 message: `New post about ${location.name}!`,
                 postId: newPost._id,
                 locationName: location.name,
             })
+
+            if (global.io) {
+                global.io.to(wl.userId.toString()).emit('new-notification', {
+                    _id: notif._id,
+                    message: notif.message,
+                    postId: {
+                        _id: newPost._id,
+                        title: newPost.title,
+                    },
+                    locationName: notif.locationName,
+                    createdAt: notif.createdAt,
+                })
+            }
         }
 
         //Response

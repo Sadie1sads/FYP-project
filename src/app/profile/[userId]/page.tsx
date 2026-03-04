@@ -5,7 +5,8 @@ import { useParams } from "next/navigation"
 import Link from "next/link"
 import Sidebar from "../../components/Sidebar"
 import axios from "axios"
-import styles from "../profile.module.css"
+import styles from "../profile.module.css" 
+import PrivateChat from "../../components/PrivateChat"
 
 type Post = {
   _id: string
@@ -23,12 +24,25 @@ export default function UserProfilePage() {
   const [posts, setPosts] = useState<Post[]>([])
   const [error, setError] = useState<string | null>(null)
 
+  // New state
+  const [chatOpen, setChatOpen] = useState(false)
+  const [currentUser, setCurrentUser] = useState<{ id: string; username: string } | null>(null)
+
   useEffect(() => {
     const load = async () => {
       try {
+        // Fetch the profile being viewed
         const res = await axios.get(`/api/users/${userId}/profile`)
         setUser(res.data.user)
         setPosts(res.data.posts || [])
+
+        
+        // fetch who is currently logged in so we know currentUserId and currentUsername for the chat
+        const meRes = await axios.get('/api/users/me', { withCredentials: true })
+        setCurrentUser({
+          id: meRes.data.user.id,
+          username: meRes.data.user.username,
+        })
       } catch {
         setError("User not found")
       } finally {
@@ -59,6 +73,9 @@ export default function UserProfilePage() {
     )
   }
 
+  // to not show "Message" button on our own profile
+  const isOwnProfile = currentUser?.id === userId
+
   return (
     <div className={styles.layout}>
       <Sidebar />
@@ -66,6 +83,26 @@ export default function UserProfilePage() {
         <div className={styles.header}>
           <h1>{user.username}&apos;s Profile</h1>
           <p className={styles.username}>@{user.username}</p>
+
+          {/* Message button to show while viewing other's profile*/}
+          {currentUser && !isOwnProfile && (
+            <button
+              onClick={() => setChatOpen(true)}
+              style={{
+                marginTop: 12,
+                padding: '10px 24px',
+                background: '#002651',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 24,
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontSize: 14,
+              }}
+            >
+              Message @{user.username}
+            </button>
+          )}
         </div>
 
         <section className={styles.posts}>
@@ -85,6 +122,17 @@ export default function UserProfilePage() {
           )}
         </section>
       </main>
+
+      {/* Chat modal*/}
+      {chatOpen && currentUser && (
+        <PrivateChat
+          currentUserId={currentUser.id}
+          currentUsername={currentUser.username}
+          otherUserId={userId}
+          otherUsername={user.username}
+          onClose={() => setChatOpen(false)}
+        />
+      )}
     </div>
   )
 }

@@ -30,7 +30,7 @@ export default function Sidebar() {
           </div>
         </Link>
 
-        <Link href="/notifications">
+        <Link href="/inbox">
           <div className={styles.navItem}>
             <Image
               src="/icons/NotificationIcon.svg"
@@ -39,7 +39,7 @@ export default function Sidebar() {
               height={24}
               className={styles.icon}
             />
-            <span className={styles.tooltip}>Notifications</span>
+            <span className={styles.tooltip}>Inbox</span>
           </div>
         </Link>
 

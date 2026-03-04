@@ -1,0 +1,239 @@
+.layout { display: flex; min-height: 100vh; }
+.main { flex: 1; padding: 24px; overflow: hidden; margin-left: 6rem;  }
+
+.container {
+  display: flex;
+  height: calc(100vh - 48px);
+  border: 1px solid #68768A;
+  box-shadow: 0 1px 6px #68768A;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.leftPanel {
+  width: 300px;
+  min-width: 300px;
+  border-right: 0.5px solid #68768A;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.title {
+  padding: 20px 16px 12px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 0.5px solid #68768A;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 0.5px solid #68768A;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+
+.tab:hover { background: #f5f5f5; }
+
+.activeTab {
+  color: #002651;
+  border-bottom: 2px solid #002651;
+  font-weight: 700;
+}
+
+.badge {
+  background: #002651;
+  color: #fff;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 11px;
+}
+
+.list { 
+  flex: 1; 
+  overflow-y: auto; 
+}
+
+.empty { 
+  padding: 24px 16px; 
+  color: #999; 
+  font-size: 13px; 
+  line-height: 1.6; 
+}
+
+/* Notification item */
+.notifItem {
+  display: flex;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pin { 
+  font-size: 18px; 
+  flex-shrink: 0;
+}
+
+.notifMessage { 
+  font-size: 13px; 
+  font-weight: 500; 
+  margin-bottom: 4px; 
+}
+
+.postLink { 
+  font-size: 12px; 
+  color: #002651; 
+  text-decoration: none; 
+}
+
+.postLink:hover { 
+  text-decoration: underline; 
+}
+
+.time { 
+  font-size: 11px; 
+  color: #bbb; 
+  margin-top: 4px; 
+}
+
+/* Conversation item */
+.convoItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
+}
+
+.convoItem:hover { 
+  background: #f9f9f9; 
+}
+.activeConvo { 
+  background: #eff6ff; 
+  border-right: 3px solid #002651; 
+}
+
+.avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #002651;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 16px; flex-shrink: 0;
+}
+
+.convoInfo { 
+  flex: 1; 
+  overflow: hidden; 
+}
+
+.convoUsername { 
+  font-size: 14px; 
+  font-weight: 600; 
+  margin-bottom: 2px; 
+}
+
+.convoPreview { 
+  font-size: 12px; 
+  color: #888; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+/* RIGHT */
+.rightPanel { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  overflow: hidden; 
+}
+
+.noChat { 
+  flex: 1; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: #999; 
+}
+
+.chatHeader {
+  padding: 16px 20px;
+  border-bottom: 0.5px solid #68768A;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.chatWith { 
+  font-weight: 700; 
+  font-size: 15px; 
+}
+
+.connStatus { 
+  font-size: 12px; 
+  color: #888; 
+}
+
+.messageList {
+  flex: 1; overflow-y: auto;
+  padding: 16px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.senderName { font-size: 11px; color: #888; margin-bottom: 2px; }
+
+.bubbleMe {
+  padding: 8px 14px;
+  border-radius: 18px 18px 4px 18px;
+  background: #002651; color: #fff;
+  font-size: 14px; word-break: break-word;
+}
+
+.bubbleThem {
+  padding: 8px 14px;
+  border-radius: 18px 18px 18px 4px;
+  background: #f0f0f0; color: #000;
+  font-size: 14px; word-break: break-word;
+}
+
+.msgTime { font-size: 10px; color: #bbb; margin-top: 2px; }
+
+.inputArea {
+  padding: 12px 16px;
+  border-top: 0.5px solid #68768A;
+  display: flex; gap: 8px;
+}
+
+.input {
+  flex: 1; padding: 10px 14px;
+  border-radius: 10px; 
+  border: 0.5px solid #002651;
+  outline: none; font-size: 14px;
+}
+
+.sendBtn {
+  padding: 10px 20px; 
+  border-radius: 10px;
+  background: #002651; 
+  color: #fff;
+  border: none; cursor: pointer; 
+  font-weight: 600;
+}
+
+.sendBtn:disabled { background: #ccc; cursor: not-allowed; }
