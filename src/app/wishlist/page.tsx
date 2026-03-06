@@ -98,13 +98,21 @@ export default function WishlistPage() {
           ) : (
             <ul className={styles.list}>
               {posts.map((post) => (
-                <li key={post._id} className={styles.item}>
-                  <Link href="/">{post.title}</Link> {post.location?.name && `(📍 ${post.location.name})`}
-                  <button type="button" onClick={() => removePost(post._id)} className={styles.remove}>
-                    Remove
-                  </button>
-                </li>
-              ))}
+              <li key={post._id} className={styles.item}>
+                <Link href={`/post/${post._id}`}>
+                  {post.title}
+                </Link> 
+                {post.location?.name && `(📍 ${post.location.name})`}
+
+                <button
+                  type="button"
+                  onClick={() => removePost(post._id)}
+                  className={styles.remove}
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
             </ul>
           )}
         </section>
