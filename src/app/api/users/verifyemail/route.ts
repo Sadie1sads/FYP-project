@@ -1,6 +1,5 @@
 import {connect} from '@/dbConnection/dbConnection'
 import User from '@/models/userModel'
-import { Underdog } from 'next/font/google'
 import{ NextRequest, NextResponse  } from 'next/server'
 
 
