@@ -24,6 +24,17 @@ export async function POST(request:NextRequest) {
             )
         }
 
+        const strongPassword = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
+
+        if (!strongPassword.test(password)) {
+            return NextResponse.json(
+                { 
+                    message: "Password must be at least 8 characters and include letters, numbers, and a symbol (!@#$%^&* etc.)" 
+                },
+                { status: 400 }
+            )
+        }
+
         //user registration
         const existingEmail = await User.findOne({ email })
         if (existingEmail) {
