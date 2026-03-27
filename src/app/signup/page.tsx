@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import {toast} from "react-hot-toast"
 import { useRouter } from "next/navigation"
-import styles from "./signup.module.css";
+import styles from "./signup.module.css"
 import Link from "next/link";
 
 export default function SignupPage() {
@@ -15,8 +15,7 @@ export default function SignupPage() {
     username: ""
   })
 
-  const [buttonDisabled, setButtonDisabled] = useState 
-  (false)
+  const [buttonDisabled, setButtonDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const onSignup = async() => {
@@ -88,53 +87,71 @@ export default function SignupPage() {
   }, [user]);
 
   return (
-    <div className={styles.SignupPage}>
-      <h1>{loading ? "Processing" : "Signup"}</h1>
-      <div className={styles.formBox}>
-      <br />
-      <label htmlFor="username">Username</label>
-      <input 
-      className='username'
-      id="username"
-      value={user.username}
-      onChange={(e)=> setUser({...user, username: e.target.value})}
-      placeholder="username"
-      type="text" />
+    <div className={styles.page}>
 
-      <label htmlFor="email">Email</label>
-      <input 
-      className='email'
-      id="email"
-      value={user.email}
-      onChange={(e)=> setUser({...user, email: e.target.value})}
-      placeholder="email"
-      type="text" />
+      <div className={styles.logo}>VOYAGE VERSE</div>
 
-      <label htmlFor="password">Password</label>
-      <input 
-      className='password'
-      id="password"
-      value={user.password}
-      onChange={(e)=> setUser({...user, password: e.target.value})}
-      placeholder="password"
-      type="password" />
+      <div className={styles.card}>
 
-      <label htmlFor="confirmpassword">Confirm Password</label>
-      <input 
-      className='confirmpassword'
-      id="confirmpassword"
-      value={user.confirmpassword}
-      onChange={(e)=> setUser({...user, confirmpassword: e.target.value})}
-      placeholder="confirm password"
-      type="password" />
+        <div className={styles.imagePanel}>
+          <img src="/login.jpg" alt="Packed car ready for adventure" className={styles.image} />
+        </div>
 
+        <div className={styles.formPanel}>
+          <h1 className={styles.title}>JOIN VOYAGE VERSE</h1>
 
-      <button onClick={onSignup} disabled={buttonDisabled || loading } className={styles.signupButton}>
-        {buttonDisabled ? "Please fill the form": loading ? "Processing..." : "Signup"}
-      </button>
-      <Link href="/login">
-      <button className={styles.loginLink}>Login</button>
-      </Link>
+          <input
+            id="username"
+            value={user.username}
+            onChange={(e) => setUser({...user, username: e.target.value})}
+            placeholder="Username"
+            type="text"
+            className={styles.input}
+          />
+
+          <input
+            id="email"
+            value={user.email}
+            onChange={(e) => setUser({...user, email: e.target.value})}
+            placeholder="Email"
+            type="email"
+            className={styles.input}
+          />
+
+          <input
+            id="password"
+            value={user.password}
+            onChange={(e) => setUser({...user, password: e.target.value})}
+            placeholder="Password"
+            type="password"
+            className={styles.input}
+          />
+
+          <input
+            id="confirmpassword"
+            value={user.confirmpassword}
+            onChange={(e) => setUser({...user, confirmpassword: e.target.value})}
+            placeholder="Confirm Password"
+            type="password"
+            className={styles.input}
+          />
+
+          <div className={styles.actions}>
+            <button
+              onClick={onSignup}
+              disabled={buttonDisabled || loading}
+              className={styles.signupButton}
+            >
+              {buttonDisabled ? "Sign Up" : loading ? "Processing..." : "Sign Up"}
+            </button>
+
+            <p className={styles.loginText}>
+              Already have an account?{" "}
+              <Link href="/login" className={styles.loginLink}>Login</Link>
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
   );
