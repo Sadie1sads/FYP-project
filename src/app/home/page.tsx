@@ -201,7 +201,7 @@ export default function Home() {
             <p className={styles.empty}>No posts yet. Be the first to share!</p>
           ) : (
             <div className={styles.feedGrid}>
-              {posts.map((post) => (
+              {posts.slice(0, 3).map((post) => (
                 <PostSummaryCard
                   key={post._id}
                   post={post}
@@ -210,6 +210,13 @@ export default function Home() {
                   onSavedChange={fetchWishlist}
                 />
               ))}
+            </div>
+          )}
+          {posts.length > 0 && (
+            <div style={{ textAlign: 'center', marginTop: 24 }}>
+              <Link href="/discover" className={styles.getStartedBtn}>
+                Discover More
+              </Link>
             </div>
           )}
         </section>
