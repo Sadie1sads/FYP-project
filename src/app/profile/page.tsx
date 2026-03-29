@@ -41,13 +41,13 @@ export default function ProfilePage() {
   }, [router])
 
   const handleLogout = async () => {
-    try {
-      await axios.get("/api/users/logout", { withCredentials: true })
-      router.replace("/login")
-    } catch {
-      router.replace("/login")
-    }
+  try {
+    await axios.get("/api/users/logout", { withCredentials: true })
+    window.location.href = "/login"    
+  } catch {
+    window.location.href = "/login"    
   }
+}
 
   const handleDeletePost = async (postId: string) => {
     if (!confirm("Delete this post?")) return
