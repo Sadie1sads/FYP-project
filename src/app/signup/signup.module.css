@@ -123,3 +123,31 @@
 .loginLink:hover {
   text-decoration: underline;
 }
+
+.showHide {
+  position: relative;
+  width: 100%;
+  display: flex;        
+  align-items: center;
+}
+
+.showHide .input {
+  width: 100%;
+  padding-right: 56px; 
+  box-sizing: border-box;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.eyeButton:hover {
+  color: #0a1f44;
+}

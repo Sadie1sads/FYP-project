@@ -18,6 +18,9 @@ export default function SignupPage() {
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const [showPassword, setShowPassword] = useState(false)
+
+
   const onSignup = async() => {
     try{
       setLoading(true)
@@ -118,14 +121,20 @@ export default function SignupPage() {
             className={styles.input}
           />
 
+          <div className={styles.showHide}>
           <input
             id="password"
             value={user.password}
             onChange={(e) => setUser({...user, password: e.target.value})}
             placeholder="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             className={styles.input}
           />
+          <button type="button" className={styles.eyeButton}
+          onClick={() => setShowPassword(!showPassword)}>
+            {showPassword? "Hide": "Show"}
+          </button>
+          </div>
 
           <input
             id="confirmpassword"
