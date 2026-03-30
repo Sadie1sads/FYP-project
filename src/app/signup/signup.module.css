@@ -151,3 +151,13 @@
 .eyeButton:hover {
   color: #0a1f44;
 }
+
+.PassMissmatch{
+  border-color: #e24b4a;
+}
+
+.errorMsg{
+  color: #e24b4a;
+  font-size: 11px;
+  margin-top: -4px;
+}

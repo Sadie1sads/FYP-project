@@ -20,6 +20,7 @@ export default function SignupPage() {
 
   const [showPassword, setShowPassword] = useState(false)
 
+  const passwordMissmatch = user.confirmpassword.length > 0 && user.password !== user.confirmpassword
 
   const onSignup = async() => {
     try{
@@ -136,14 +137,19 @@ export default function SignupPage() {
           </button>
           </div>
 
+         <div className={styles.showHide}>
           <input
             id="confirmpassword"
             value={user.confirmpassword}
             onChange={(e) => setUser({...user, confirmpassword: e.target.value})}
             placeholder="Confirm Password"
             type="password"
-            className={styles.input}
+            className={`${styles.input} ${passwordMissmatch ? styles.PassMissmatch : ""}`}
           />
+          </div>
+          {passwordMissmatch && ( 
+            <p className={styles.errorMsg}> Passwords do not match</p>
+          )}
 
           <div className={styles.actions}>
             <button
