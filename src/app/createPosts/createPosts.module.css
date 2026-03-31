@@ -15,10 +15,17 @@
   gap: 60px;
 }
 
+.imageCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 380px;
+  flex-shrink: 0;
+}
 
 .imageBox {
   width: 380px;
-  height: 380px;
+  height: 240px;
   border: 2px dashed #ccc;
   border-radius: 20px;
   display: flex;
@@ -27,8 +34,8 @@
   color: #555;
   text-align: center;
   cursor: pointer;
-  overflow: hidden;      
-  flex-shrink: 0; 
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .preview {
@@ -37,7 +44,6 @@
   object-fit: cover;
   border-radius: 18px;
 }
-
 
 .form {
   flex: 1;

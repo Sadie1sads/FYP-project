@@ -38,27 +38,27 @@ export default function CreatePostPage() {
     review: "",
     tags: ""
   })
-  const [imageFile, setImageFile] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [imageFiles, setImageFiles] = useState<File[]>([])
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
   const [uploading, setUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const { startUpload } = useUploadThing("imageUploader")
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setImageFile(file)
-    setImagePreview(URL.createObjectURL(file))
+  const files = Array.from(e.target.files || [])
+  if (!files.length) return
+  setImageFiles((prev) => [...prev, ...files])
+  setImagePreviews((prev) => [...prev, ...files.map((f) => URL.createObjectURL(f))])
   }
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    const file = e.dataTransfer.files?.[0]
-    if (!file) return
-    setImageFile(file)
-    setImagePreview(URL.createObjectURL(file))
-  }
+  e.preventDefault()
+  const files = Array.from(e.dataTransfer.files || [])
+  if (!files.length) return
+  setImageFiles((prev) => [...prev, ...files])
+  setImagePreviews((prev) => [...prev, ...files.map((f) => URL.createObjectURL(f))])
+}
 
   const handleSubmit = async () => {
     if (!postData.title.trim() || !postData.location.trim()) {
@@ -75,16 +75,17 @@ export default function CreatePostPage() {
       setUploading(true)
 
       // upload image
-      let imageUrl: string | null = null
-      if (imageFile) {
-        const uploaded = await startUpload([imageFile])
-        imageUrl = uploaded?.[0]?.url ?? null
+      let imageUrls: string[] = []
+      if (imageFiles.length > 0) {
+        const uploaded = await startUpload(imageFiles)
+        imageUrls = uploaded?.map((u) => u.url) ?? []
+
+        console.log('uploaded URLs:', imageUrls)  // ← add this
       }
 
-      // auto fetch coordinates from location name, user doesn't do anything
       const coords = await getCoordinates(postData.location)
-      // if location is "Paris" this returns { latitude: 48.8566, longitude: 2.3522 }
-      // if location not found, coords is null and we just save without coordinates
+
+      console.log('sending images:', imageUrls)
 
       await axios.post(
         "/api/Posts/createPosts",
@@ -96,7 +97,7 @@ export default function CreatePostPage() {
             latitude: coords?.latitude ?? null,   
             longitude: coords?.longitude ?? null,
           },
-          images: imageUrl ? [imageUrl] : [],
+          images: imageUrls,
           tags: postData.tags
             ? postData.tags.split(",").map((t) => t.trim()).filter(Boolean)
             : [],
@@ -106,8 +107,8 @@ export default function CreatePostPage() {
 
       toast.success("Post created successfully!")
       setPostData({ title: "", location: "", description: "", review: "", tags: "" })
-      setImageFile(null)
-      setImagePreview(null)
+      setImageFiles([])
+      setImagePreviews([])
       router.push("/home")
     } catch (error: any) {
       toast.error(error.response?.data?.error || "Failed to create post")
@@ -120,26 +121,29 @@ export default function CreatePostPage() {
     <div className={styles.container}>
       <h1 className={styles.heading}>Create Post</h1>
       <div className={styles.content}>
-
-        <div
-          className={styles.imageBox}
-          onClick={() => fileInputRef.current?.click()}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-        >
-          {imagePreview ? (
-            <img src={imagePreview} alt="Preview" className={styles.preview} />
-          ) : (
-            <p>Drop your image here or <span className={styles.browse}>browse</span></p>
-          )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleImageChange}
-          />
-        </div>
+        <div className={styles.imageCol}>
+            {imagePreviews.map((src, i) => (
+              <div key={i} className={styles.imageBox}>
+                <img src={src} alt={`Preview ${i}`} className={styles.preview} />
+              </div>
+            ))}
+            <div
+              className={styles.imageBox}
+              onClick={() => fileInputRef.current?.click()}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={handleDrop}
+            >
+              <p>Drop your image here or <span className={styles.browse}>browse</span></p>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+            </div>
+          </div>
 
         <div className={styles.form}>
           <input
