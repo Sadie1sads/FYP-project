@@ -3,13 +3,13 @@ import { createUploadthing, type FileRouter } from "uploadthing/next"
 const f = createUploadthing()
 
 export const ourFileRouter = {
-  imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
-    .middleware(async ({ req }) => {
-      
+  imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 10 } })
+    .middleware(async () => {
       return {}
     })
     .onUploadComplete(async ({ file }) => {
       console.log("Upload complete:", file.url)
+      return { url: file.url } 
     }),
 } satisfies FileRouter
 
