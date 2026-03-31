@@ -6,6 +6,7 @@ import Link from "next/link"
 import Sidebar from "../../components/Sidebar"
 import axios from "axios"
 import styles from "./post.module.css"
+import useEmblaCarousel from 'embla-carousel-react'
 
 type Post = {
   _id: string
@@ -27,6 +28,9 @@ export default function PostDetailPage() {
   const [savedPostIds, setSavedPostIds] = useState<Set<string>>(new Set())
   const [commentText, setCommentText] = useState("")
   const [actionLoading, setActionLoading] = useState(false)
+  const [emblaRef, emblaApi] = useEmblaCarousel()
+  const scrollPrev = () => emblaApi?.scrollPrev()
+  const scrollNext = () => emblaApi?.scrollNext()
 
   useEffect(() => {
     const load = async () => {
@@ -148,7 +152,7 @@ export default function PostDetailPage() {
     )
   }
 
-  const imageUrl = post.images?.[0]
+
   const parts = (post.description || "").split("\n\n")
   const shortDesc = parts[0] || ""
   const review = parts.length > 1 ? parts.slice(1).join("\n\n") : post.description
@@ -158,10 +162,25 @@ export default function PostDetailPage() {
       <Sidebar />
       <main className={styles.main}>
         <div className={styles.content}>
-          
           <div className={styles.imageSection}>
-            {imageUrl ? (
-              <img src={imageUrl} alt={post.title} className={styles.postImage} />
+            {post.images && post.images.length > 0 ? (
+              <div className={styles.sliderWrapper}>
+                <div className={styles.embla} ref={emblaRef}>
+                  <div className={styles.emblaContainer}>
+                    {post.images.map((img, i) => (
+                      <div key={i} className={styles.emblaSlide}>
+                        <img src={img} alt={post.title} className={styles.postImage} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {post.images.length > 1 && (
+                  <div className={styles.sliderButtons}>
+                    <button onClick={scrollPrev} className={styles.sliderBtn}>‹</button>
+                    <button onClick={scrollNext} className={styles.sliderBtn}>›</button>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className={styles.imagePlaceholder}>
                 <span>📷</span>
@@ -169,8 +188,6 @@ export default function PostDetailPage() {
               </div>
             )}
           </div>
-
-          
           <div className={styles.infoSection}>
             <h1 className={styles.title}>{post.title}</h1>
             <p className={styles.location}>📍 {post.location?.name}</p>
