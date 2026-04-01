@@ -67,7 +67,6 @@ export default function AdminDashboardPage() {
         <main className={styles.main}>
             <h1 className={styles.title}>Admin Dashboard</h1>
 
-            {/* Stat cards */}
             <div className={styles.cards}>
                 <div className={styles.card}>
                     <p className={styles.cardNumber}>{stats.totalUsers}</p>
@@ -87,7 +86,6 @@ export default function AdminDashboardPage() {
                 </div>
             </div>
 
-            {/* Navigation */}
             <div className={styles.navCards}>
                 <Link href="/admin/manageUsers" className={styles.navCard}>
                     Manage Users
@@ -98,7 +96,6 @@ export default function AdminDashboardPage() {
             </div>
 
             <div className={styles.panels}>
-                {/* Trending locations from trending API */}
                 <div className={styles.panel}>
                     <h2 className={styles.panelTitle}>📍 Trending Locations</h2>
                     {trending.length === 0 ? (
@@ -114,7 +111,6 @@ export default function AdminDashboardPage() {
                     )}
                 </div>
 
-                {/* Recent signups */}
                 <div className={styles.panel}>
                     <h2 className={styles.panelTitle}>Recent Signups</h2>
                     {stats.recentUsers.map((u) => (

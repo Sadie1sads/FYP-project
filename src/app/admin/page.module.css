@@ -26,11 +26,11 @@
   border-radius: 12px;
   padding: 24px 20px;
   text-align: center;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 1px 0px #002651;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px #002651;
 }
 
 .cardNumber {
@@ -66,10 +66,12 @@
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
+  border: 1px solid #002651;
 }
 
 .navCard:hover {
-  background: #002651;
+  background: white;
+  color: #002651;
 }
 
 .navIcon {
