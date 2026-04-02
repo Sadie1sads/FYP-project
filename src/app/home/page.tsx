@@ -5,12 +5,7 @@ import Link from "next/link"
 import Sidebar from "../components/Sidebar"
 import styles from "./home.module.css"
 import axios from "axios"
-
-type Comment = {
-  _id?: string
-  user: { username: string }
-  text: string
-}
+import PostSummaryCard from "../components/PostSummaryCard"
 
 type Post = {
   _id: string
@@ -20,115 +15,16 @@ type Post = {
   tags?: string[]
   images?: string[]
   likes?: string[]
-  comments?: Comment[]
+  comments?: { _id?: string; user: { username: string }; text: string }[]
   createdBy: { username: string; _id?: string }
   createdAt: string
-}
-
-/* Summary card for Discover and Trending section */
-function PostSummaryCard({
-  post,
-  savedPostIds,
-  onUpdate,
-  onSavedChange,
-}: {
-  post: Post
-  savedPostIds: Set<string>
-  onUpdate: () => void
-  onSavedChange: () => void
-}) {
-  const [loading, setLoading] = useState(false)
-  const isSaved = savedPostIds.has(post._id)
-  const likeCount = post.likes?.length ?? 0
-  const imageUrl = post.images?.[0]
-
-  const stopNav = (e: React.MouseEvent) => e.stopPropagation()
-
-  const handleLike = async (e: React.MouseEvent) => {
-    stopNav(e)
-    if (loading) return
-    setLoading(true)
-    try {
-      await axios.post(`/api/Posts/${post._id}/like`, {}, { withCredentials: true })
-      onUpdate()
-    } catch {
-      /* not logged in */
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSavePost = async (e: React.MouseEvent) => {
-    stopNav(e)
-    if (loading) return
-    setLoading(true)
-    try {
-      if (isSaved) {
-        await axios.delete(`/api/wishlist/post?postId=${post._id}`, { withCredentials: true })
-      } else {
-        await axios.post("/api/wishlist/post", { postId: post._id }, { withCredentials: true })
-      }
-      onSavedChange()
-    } catch {
-      /* not logged in */
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleSaveLocation = async (e: React.MouseEvent) => {
-    stopNav(e)
-    if (loading || !post.location?.name) return
-    setLoading(true)
-    try {
-      await axios.post("/api/wishlist/location", { name: post.location.name }, { withCredentials: true })
-      onSavedChange()
-    } catch {
-      /* not logged in */
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  return (
-    <Link href={`/post/${post._id}`} className={styles.summaryCard}>
-      <div className={styles.summaryImage}>
-        {imageUrl ? (
-          <img src={imageUrl} alt={post.title} />
-        ) : (
-          <div className={styles.imagePlaceholder}>📷</div>
-        )}
-      </div>
-      <div className={styles.summaryContent}>
-        <h3>{post.title}</h3>
-        <p className={styles.summaryLocation}>📍 {post.location?.name}</p>
-        {post.tags && post.tags.length > 0 && (
-          <div className={styles.summaryTags}>
-            {post.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className={styles.tag}>{tag}</span>
-            ))}
-          </div>
-        )}
-        <div className={styles.summaryActions} onClick={stopNav}>
-          <button type="button" onClick={handleLike} disabled={loading} className={styles.likeBtn}>
-            🩷 {likeCount}
-          </button>
-          <button type="button" onClick={handleSavePost} disabled={loading} className={styles.saveBtn}>
-            {isSaved ? "✓ Saved" : "Save post"}
-          </button>
-          <button type="button" onClick={handleSaveLocation} disabled={loading} className={styles.saveBtn}>
-            📍 Save location
-          </button>
-        </div>
-      </div>
-    </Link>
-  )
 }
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [savedPostIds, setSavedPostIds] = useState<Set<string>>(new Set())
+  const [trending, setTrending] = useState<{ location: string; count: number; posts: Post[] }[]>([])
 
   const fetchWishlist = useCallback(async () => {
     try {
@@ -139,8 +35,6 @@ export default function Home() {
       setSavedPostIds(new Set())
     }
   }, [])
-
-  const [trending, setTrending] = useState<{ location: string; count: number; posts: Post[] }[]>([])
 
   const fetchPosts = useCallback(async () => {
     try {
@@ -155,24 +49,16 @@ export default function Home() {
 
   const fetchTrending = useCallback(async () => {
     try {
-      const res = await axios.get("/api/Posts/trending?limit=5")
+      const res = await axios.get("/api/Posts/trending?limit=3")
       setTrending(res.data.trending || [])
     } catch {
       setTrending([])
     }
   }, [])
 
-  useEffect(() => {
-    fetchPosts()
-  }, [fetchPosts])
-
-  useEffect(() => {
-    fetchTrending()
-  }, [fetchTrending])
-
-  useEffect(() => {
-    fetchWishlist()
-  }, [fetchWishlist])
+  useEffect(() => { fetchPosts() }, [fetchPosts])
+  useEffect(() => { fetchTrending() }, [fetchTrending])
+  useEffect(() => { fetchWishlist() }, [fetchWishlist])
 
   return (
     <div className={styles.layout}>
@@ -229,42 +115,48 @@ export default function Home() {
           {trending.length === 0 ? (
             <p className={styles.empty}>No trending locations yet.</p>
           ) : (
-            <div className={styles.trendingList}>
-              {trending
-            .filter((item) => item.count > 1)
-            .map((item) => (
-                <div key={item.location} className={styles.trendingBlock}>
-                <h3 className={styles.trendingLocation}>
-                    📍 {item.location} <span className={styles.postCount}>({item.count} posts)</span>
-                </h3>
-                <div className={styles.trendingPosts}>
-                    {item.posts.map((post) => (
-                    <PostSummaryCard
-                        key={post._id}
-                        post={post}
-                        onUpdate={() => {
-                        fetchPosts()
-                        fetchTrending()
-                        }}
-                        savedPostIds={savedPostIds}
-                        onSavedChange={fetchWishlist}
-                    />
-                    ))}
-                </div>
-                </div>
-            ))}
-            </div>
+            <>
+              <div className={styles.trendingList}>
+                {trending
+                  .filter((item) => item.count > 1)
+                  .slice(0, 3)
+                  .map((item) => (
+                    <div key={item.location} className={styles.trendingBlock}>
+                      <h3 className={styles.trendingLocation}>
+                        📍 {item.location}{" "}
+                        <span className={styles.postCount}>({item.count} posts)</span>
+                      </h3>
+                      <div className={styles.trendingPosts}>
+                        {item.posts[0] && (
+                          <PostSummaryCard
+                            key={item.posts[0]._id}
+                            post={item.posts[0]}
+                            onUpdate={() => { fetchPosts(); fetchTrending() }}
+                            savedPostIds={savedPostIds}
+                            onSavedChange={fetchWishlist}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <div style={{ textAlign: 'center', marginTop: 24 }}>
+                <Link href="/discover" className={styles.getStartedBtn}>
+                  Explore Trending Location on Map
+                </Link>
+              </div>
+            </>
           )}
         </section>
 
         <section className={styles.banner}>
-            <h3>Welcome to our website</h3>
-            <button>About Us</button>
+          <h3>Welcome to our website</h3>
+          <button>About Us</button>
         </section>
 
         <section className={styles.bannerTwo}>
         </section>
       </main>
     </div>
-  );
+  )
 }
