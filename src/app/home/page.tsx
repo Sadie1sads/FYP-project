@@ -150,10 +150,18 @@ export default function Home() {
         </section>
 
         <section className={styles.banner}>
-          <h3>Welcome to our website</h3>
-          <button>About Us</button>
+          <div className={styles.bannerContent}>
+            <p className={styles.bannerTop}>Travel Together</p>
+            <h3>Explore Our Travel Packages</h3>
+            <p className={styles.bannerMid}>
+               Join group travel experiences to the trending locations.
+               Meet fellow travelers, explore new destinations, and create memories together.
+            </p>
+            <Link href="/discover#packages" className={styles.TravelBtn}>
+              View Travel Packages
+            </Link>
+          </div>
         </section>
-
         <section className={styles.bannerTwo}>
         </section>
       </main>

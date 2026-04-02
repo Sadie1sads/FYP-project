@@ -90,7 +90,6 @@
   box-shadow: 0 1px 6px #68768A;
   text-decoration: none;
   color: inherit;
-  transition: box-shadow 0.2s;
 }
 
 .summaryCard:hover {
@@ -152,20 +151,6 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
-}
-
-.feed {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 24px;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
 }
 
 .tag {
@@ -271,18 +256,62 @@
   min-height: 100vh;
 }
 
-.banner{
+.banner {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: white;
-  color: #002651;
-  border: 1px solid #002651;
-  padding: 70px 16px;
-  border-radius: 0 50 0 0;
-  box-shadow: 1px 5px 10px #002651;
+  background: #002651;
+  color: white;
+  padding: 80px 40px;
   margin: 50px;
+  border-radius: 24px;
+  box-shadow: 0 4px 4px #002651;
+}
+
+.bannerContent {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.bannerContent h3 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  color: #FEFBF2;
+}
+
+.bannerTop{
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #93c5fd;
+  margin: 0;
+}
+
+.bannerMid {
+  font-size: 16px;
+  color: #cbd5e1;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.TravelBtn{
+  background-color: transparent;
+  color:#FEFBF2;
+  padding: 6px;
+  border-radius: 8;
+  border: 1px solid #FEFBF2;
+}
+
+.TravelBtn:hover{
+  background-color: #FEFBF2;
+  color: #002651;
+  padding: 6px;
+  border-radius: 8;
 }
 
 .bannerTwo{
@@ -291,18 +320,4 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-@media (max-width: 1024px) {
-  .feedGrid > *,
-  .trendingPosts > * {
-    flex: 0 0 calc(50% - 12px);
-  }
-}
-
-@media (max-width: 600px) {
-  .feedGrid > *,
-  .trendingPosts > * {
-    flex: 0 0 100%;
-  }
 }
