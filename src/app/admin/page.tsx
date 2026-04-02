@@ -41,7 +41,6 @@ export default function AdminDashboardPage() {
                     return
                 }
 
-
                 const [statsRes, trendingRes] = await Promise.all([
                     axios.get('/api/admin/stats'),
                     axios.get('/api/Posts/trending?limit=5'), 
@@ -59,13 +58,25 @@ export default function AdminDashboardPage() {
         })()
         return () => { active = false }
     }, [router])
+    const handleLogout = async () => {
+        if (!confirm("Are you sure you want to logout?")) return
+        try {
+            await axios.get("/api/users/logout", { withCredentials: true })
+            window.location.href = "/login"
+        } catch {
+            window.location.href = "/login"
+        }
+        }
 
     if (loading) return <main className={styles.main}><p>Loading...</p></main>
     if (!stats) return null
 
     return (
         <main className={styles.main}>
-            <h1 className={styles.title}>Admin Dashboard</h1>
+            <div className={styles.titleRow}>
+                <h1 className={styles.title}>Admin Dashboard</h1>
+                <button onClick={handleLogout} className={styles.logoutBtn}>Logout</button>
+            </div>
 
             <div className={styles.cards}>
                 <div className={styles.card}>
@@ -92,6 +103,9 @@ export default function AdminDashboardPage() {
                 </Link>
                 <Link href="/admin/packages" className={styles.navCard}>
                     Travel Packages
+                </Link>
+                <Link href="/admin/showPosts" className={styles.navCard}>
+                    View all Posts
                 </Link>
             </div>
 

@@ -5,12 +5,32 @@
   font-family: sans-serif;
 }
 
-
 .title {
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 28px;
   color: #111;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.logoutBtn {
+  padding: 8px 20px;
+  border: 1px solid #002651;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.logoutBtn:hover {
+  background: #002651;
+  color: white;
 }
 
 .cards {
