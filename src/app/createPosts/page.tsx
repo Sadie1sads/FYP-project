@@ -6,6 +6,7 @@ import axios from "axios"
 import { toast } from "react-hot-toast"
 import { useRouter } from "next/navigation"
 import { useUploadThing } from "@/helpers/uploadthing"
+import Link from "next/link"
 
 //new helper function
 async function getCoordinates(locationName: string): Promise<{ latitude: number; longitude: number } | null> {
@@ -119,6 +120,7 @@ export default function CreatePostPage() {
 
   return (
     <div className={styles.container}>
+      <Link href="/home" className={styles.back}>↩︎ Back</Link>
       <h1 className={styles.heading}>Create Post</h1>
       <div className={styles.content}>
         <div className={styles.imageCol}>

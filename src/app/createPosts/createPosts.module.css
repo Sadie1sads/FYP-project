@@ -4,6 +4,17 @@
   min-height: 100vh;
 }
 
+.back {
+  color: #002651;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.back:hover {
+  color: blue;
+}
+
 .heading {
   font-size: 32px;
   font-weight: 700;
