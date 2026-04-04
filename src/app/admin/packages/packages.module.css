@@ -1,0 +1,231 @@
+.main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: sans-serif;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #111;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.back {
+  color: #002651;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.back:hover {
+  color: blue;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 4px #002651;
+  margin-bottom: 24px;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: #111;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.empty {
+  color: #9ca3af;
+  font-size: 13px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.locationTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.locationTag {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  background: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.locationTag:hover {
+  background: #eff6ff;
+  border-color: #002651;
+}
+
+.locationTagActive {
+  background: #002651;
+  color: #fff;
+  border-color: #002651;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #CFC6B5;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #002651;
+}
+
+.dateRow {
+  display: flex;
+  gap: 10px;
+}
+
+.dateField {
+  flex: 1;
+}
+
+.dateLabel {
+  font-size: 12px;
+  color: #666;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.createBtn {
+  padding: 10px 24px;
+  background: #002651;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  align-self: flex-start;
+}
+
+.createBtn:hover {
+  background: #003a7a;
+}
+
+.createBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.packageList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.packageCard {
+  border: 1px solid #40598c;
+  border-radius: 10px;
+  padding: 16px;
+  background: #e8eef5;
+}
+
+.packageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.packageLocation {
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0 0 4px;
+}
+
+.packageDesc {
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 4px;
+}
+
+.packageMeta {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+}
+
+.packageActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.joinedBtn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  background: #f9f9f9;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.joinedBtn:hover {
+  background: #eff6ff;
+}
+
+.deleteBtn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #fee2e2;
+  color: #991b1b;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.deleteBtn:hover {
+  background: #fecaca;
+}
+
+.joinedList {
+  margin-top: 12px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 12px;
+}
+
+.joinedUser {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #f9f9f9;
+  font-size: 13px;
+}
+
+.joinedUser:last-child {
+  border-bottom: none;
+}
