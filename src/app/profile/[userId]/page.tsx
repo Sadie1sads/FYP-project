@@ -14,6 +14,7 @@ type Post = {
   description: string
   location: { name: string }
   tags?: string[]
+  images?: string[] 
 }
 
 export default function UserProfilePage() {
@@ -113,9 +114,27 @@ export default function UserProfilePage() {
             <div className={styles.postList}>
               {posts.map((post) => (
                 <article key={post._id} className={styles.postCard}>
-                  <h3>{post.title}</h3>
-                  <p className={styles.location}>📍 {post.location?.name}</p>
-                  <p className={styles.description}>{post.description}</p>
+                  {post.images?.[0] && (
+                    <div className={styles.postImage}>
+                      <img src={post.images[0]} alt={post.title} />
+                    </div>
+                  )}
+                  <div className={styles.postContent}>
+                    <div className={styles.postMeta}>
+                      <Link href={`/post/${post._id}`} className={styles.postTitleLink}>
+                        <h3>{post.title}</h3>
+                      </Link>
+                      <p className={styles.location}>📍 {post.location?.name}</p>
+                      {post.tags && post.tags.length > 0 && (
+                        <div className={styles.tags}>
+                          {post.tags.map((tag) => (
+                            <span key={tag} className={styles.tag}>{tag}</span>
+                          ))}
+                        </div>
+                      )}
+                      <p className={styles.description}>{post.description}</p>
+                    </div>
+                  </div>
                 </article>
               ))}
             </div>
