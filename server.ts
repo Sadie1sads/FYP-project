@@ -29,7 +29,7 @@ declare global {
 
 async function main() {
   await app.prepare();
-  await connect(); // your existing DB connection
+  await connect(); 
 
   const httpServer = createServer((req, res) => {
     const parsedUrl = parse(req.url!, true);
@@ -63,7 +63,7 @@ async function main() {
       const secret = process.env.TOKEN_SECRET!;
       const decoded = jwt.verify(token, secret) as TokenPayload;
 
-      // Attach user info to the socket object — available in all event handlers
+      
       socket.userId = decoded.id;
       socket.username = decoded.username;
 
@@ -74,7 +74,11 @@ async function main() {
   });
 
   io.on('connection', (socket: AuthenticatedSocket) => {
-    console.log(`🔌 ${socket.username} connected (${socket.id})`);
+    console.log(` ${socket.username} connected (${socket.id})`);
+    // Join a private room to receive personal notifications.
+    if (socket.userId) {
+      socket.join(socket.userId);
+    }
 
     // join a private room
     // Client sends the otherUserId they want to chat with
@@ -131,5 +135,4 @@ async function main() {
     console.log('> Ready on http://localhost:3000');
   });
 }
-
 main();
