@@ -35,10 +35,10 @@ export async function DELETE(
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        const decoded: { id: string } = jwt.verify(
+        const decoded: { id: string; role: string } = jwt.verify(
             token,
             process.env.TOKEN_SECRET!
-        ) as { id: string }
+        ) as { id: string; role: string }
 
         const { postId } = await params
         const post = await TravelPost.findById(postId)
@@ -46,8 +46,11 @@ export async function DELETE(
             return NextResponse.json({ error: 'Post not found' }, { status: 404 })
         }
 
-        if (String(post.createdBy) !== decoded.id) {
-            return NextResponse.json({ error: 'You can only delete your own posts' }, { status: 403 })
+        const isOwner = String(post.createdBy) === decoded.id
+        const isAdmin = decoded.role === 'admin'
+
+        if (!isOwner && !isAdmin) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
         }
 
         await TravelPost.findByIdAndDelete(postId)
@@ -57,6 +60,7 @@ export async function DELETE(
         return NextResponse.json({ error: message }, { status: 500 })
     }
 }
+
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ postId: string }> }
