@@ -83,6 +83,12 @@
   border-color: #002651;
 }
 
+.locationTagActive:hover{
+  background: #9ebbe0;
+  border-color: #4d719a;
+  color: #002651;
+}
+
 .formFields {
   display: flex;
   flex-direction: column;
