@@ -7,6 +7,7 @@ import Sidebar from "../../components/Sidebar"
 import axios from "axios"
 import styles from "./post.module.css"
 import useEmblaCarousel from 'embla-carousel-react'
+import toast from "react-hot-toast"
 
 type Post = {
   _id: string
@@ -113,23 +114,30 @@ export default function PostDetailPage() {
   }
 
   const handleComment = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!post || !commentText.trim() || actionLoading) return
-    setActionLoading(true)
-    try {
-      await axios.post(
-        `/api/Posts/${post._id}/comments`,
-        { text: commentText },
-        { withCredentials: true }
-      )
-      setCommentText("")
-      refetch()
-    } catch {
-      /* not logged in */
-    } finally {
-      setActionLoading(false)
-    }
+  e.preventDefault()
+
+  if (!post || actionLoading) return
+
+  if (!commentText.trim()) {
+    toast.error("Comment text is required")
+    return
   }
+
+  setActionLoading(true)
+  try {
+    await axios.post(
+      `/api/Posts/${post._id}/comments`,
+      { text: commentText },
+      { withCredentials: true }
+    )
+    setCommentText("")
+    refetch()
+  } catch {
+    /* not logged in */
+  } finally {
+    setActionLoading(false)
+  }
+}
 
   if (loading) {
     return (
