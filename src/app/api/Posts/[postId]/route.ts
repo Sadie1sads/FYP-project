@@ -24,7 +24,6 @@ export async function GET(
         return NextResponse.json({ error: message }, { status: 500 })
     }
 }
-
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ postId: string }> }
@@ -35,10 +34,10 @@ export async function DELETE(
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         }
 
-        const decoded: { id: string; role: string } = jwt.verify(
+        const decoded: { id: string; isAdmin: boolean } = jwt.verify(
             token,
             process.env.TOKEN_SECRET!
-        ) as { id: string; role: string }
+        ) as { id: string; isAdmin: boolean }
 
         const { postId } = await params
         const post = await TravelPost.findById(postId)
@@ -47,7 +46,7 @@ export async function DELETE(
         }
 
         const isOwner = String(post.createdBy) === decoded.id
-        const isAdmin = decoded.role === 'admin'
+        const isAdmin = decoded.isAdmin
 
         if (!isOwner && !isAdmin) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
@@ -60,7 +59,6 @@ export async function DELETE(
         return NextResponse.json({ error: message }, { status: 500 })
     }
 }
-
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ postId: string }> }
