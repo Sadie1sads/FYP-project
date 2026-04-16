@@ -34,6 +34,13 @@ export async function POST(request:NextRequest) {
                 { status: 400 }
             )
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(email)) {
+            return NextResponse.json(
+                { message: "Please provide a valid email address" },
+                { status: 400 }
+            )
+        }
 
         //user registration
         const existingEmail = await User.findOne({ email })
