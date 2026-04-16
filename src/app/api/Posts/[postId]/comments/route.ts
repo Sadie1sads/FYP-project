@@ -2,6 +2,8 @@ import { connect } from '@/dbConnection/dbConnection'
 import TravelPost from '@/models/createTravelPost'
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
+
 
 connect()
 
@@ -38,7 +40,7 @@ export async function POST(
 
         if (!post.comments) post.comments = []
         post.comments.push({
-            user: decoded.id,
+            user: new mongoose.Types.ObjectId(decoded.id),
             text: text.trim(),
         })
         await post.save()
