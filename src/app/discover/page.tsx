@@ -6,6 +6,7 @@ import axios from "axios"
 import Sidebar from "../components/Sidebar"
 import PostSummaryCard from "../components/PostSummaryCard"
 import styles from "./discover.module.css"
+import toast from "react-hot-toast"
 
 type TrendingLocation = {
   location: string
@@ -55,7 +56,7 @@ export default function DiscoverPage() {
 
   const fetchTrending = useCallback(async () => {
     try {
-      const res = await axios.get("/api/Posts/trending?limit=10")
+      const res = await axios.get("/api/Posts/trending?limit=6")
       setTrending(res.data.trending || [])
     } catch {
       setTrending([])
@@ -131,14 +132,25 @@ useEffect(() => {
 
 
   const joinPackage = async (packageId: string) => {
+  if (
+    !joinForm.fullName.trim() ||
+    !joinForm.address.trim() ||
+    !joinForm.city.trim() ||
+    !joinForm.contactNumber.trim()
+  ) {
+    toast.error("All fields are required")
+    return
+  }
+
   setJoining(packageId)
   try {
     await axios.post(`/api/packages/${packageId}/join`, joinForm, { withCredentials: true })
     setJoined((prev) => [...prev, packageId])
     setJoiningPkg(null)
     setJoinForm({ fullName: '', address: '', city: '', contactNumber: '' })
-  } catch {
-    alert('Could not join. You may have already joined.')
+  } catch (error: any) {
+    const message = error?.response?.data?.error || "Could not join package"
+    toast.error(message)
   } finally {
     setJoining(null)
   }
