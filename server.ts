@@ -84,21 +84,24 @@ async function main() {
     // Client sends the otherUserId they want to chat with
     // We build a consistent roomId from both user IDs (sorted alphabetically)
     socket.on('join-private-chat', async (otherUserId: string) => {
+    try {
       const ids = [socket.userId!, otherUserId].sort();
       const roomId = ids.join('_');
 
       socket.join(roomId);
       console.log(`${socket.username} joined room: ${roomId}`);
 
-      // Send last 50 messages to the user who just opened the chat
       const history = await Message.find({ roomId })
         .sort({ createdAt: 1 })
         .limit(50)
         .lean();
 
       socket.emit('message-history', history);
-    });
-
+    } catch (error) {
+      console.error('Failed to join private chat:', error);
+      socket.emit('chat-error', { message: 'Failed to load chat history' });
+    }
+  });
     // send a message
     socket.on('send-message', async (data: { otherUserId: string; text: string }) => {
       const { otherUserId, text } = data;
