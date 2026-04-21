@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Link from 'next/link'
 import styles from './packages.module.css'
+import toast from 'react-hot-toast'
 
 type TrendingLocation = {
   location: string
@@ -67,7 +68,7 @@ export default function AdminPackagesPage() {
 
   const createPackage = async () => {
     if (!selected || !form.description || !form.startDate || !form.endDate || !form.price) {
-      alert('Please fill all fields and select a location')
+      toast.error('Please fill all fields and select a location')
       return
     }
     setCreating(true)
@@ -82,9 +83,11 @@ export default function AdminPackagesPage() {
       setPackages((prev) => [res.data.package, ...prev])
       setForm({ description: '', startDate: '', endDate: '', price: '' })
       setSelected('')
-    } catch {
-      alert('Failed to create package')
-    } finally {
+    } catch (error: any) {
+        const msg =
+          error?.response?.data?.error || 'Failed to create package'
+        toast.error(msg)
+      } finally {
       setCreating(false)
     }
   }
@@ -95,7 +98,7 @@ export default function AdminPackagesPage() {
       await axios.delete('/api/admin/packages', { data: { packageId } })
       setPackages((prev) => prev.filter((p) => p._id !== packageId))
     } catch {
-      alert('Failed to delete')
+      toast.error('Failed to delete')
     }
   }
 
