@@ -104,31 +104,35 @@ async function main() {
   });
     // send a message
     socket.on('send-message', async (data: { otherUserId: string; text: string }) => {
-      const { otherUserId, text } = data;
-      if (!text.trim()) return;
+      try {
+        const { otherUserId, text } = data;
+        if (!text.trim()) return;
 
-      // Rebuild the same consistent roomId
-      const ids = [socket.userId!, otherUserId].sort();
-      const roomId = ids.join('_');
+        // Rebuild the same consistent roomId
+        const ids = [socket.userId!, otherUserId].sort();
+        const roomId = ids.join('_');
 
-      // Save to MongoDB
-      const saved = await Message.create({
-        roomId,
-        senderId: socket.userId,
-        senderUsername: socket.username,
-        text: text.trim(),
-      });
+        // Save to MongoDB
+        const saved = await Message.create({
+          roomId,
+          senderId: socket.userId,
+          senderUsername: socket.username,
+          text: text.trim(),
+        });
 
-      // Broadcast to both sender and receiver in the room 
-      io.to(roomId).emit('receive-message', {
-        _id: saved._id,
-        senderId: saved.senderId,
-        senderUsername: saved.senderUsername,
-        text: saved.text,
-        createdAt: saved.createdAt,
-      });
+        // Broadcast to both sender and receiver in the room 
+        io.to(roomId).emit('receive-message', {
+          _id: saved._id,
+          senderId: saved.senderId,
+          senderUsername: saved.senderUsername,
+          text: saved.text,
+          createdAt: saved.createdAt,
+        });
+      } catch (error) {
+        console.error('Failed to send message:', error);
+        socket.emit('chat-error', { message: 'Failed to send message' });
+      }
     });
-
     socket.on('disconnect', () => {
       console.log(` ${socket.username} disconnected`);
     });
