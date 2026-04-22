@@ -1,4 +1,3 @@
-// src/components/PrivateChat.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -104,7 +103,7 @@ export default function PrivateChat({
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         }}>
           <div>
-            <div style={{ fontWeight: 600 }}>@{otherUsername}</div>
+            <div style={{ fontWeight: 600 }}>{otherUsername}</div>
             <div style={{ fontSize: 12, color: connected ? 'green' : 'gray' }}>
               {connected ? 'Connected' : 'Connecting...'}
             </div>

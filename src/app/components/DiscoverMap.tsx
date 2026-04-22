@@ -20,9 +20,19 @@ type TrendingLocation = {
   count: number
   latitude: number
   longitude: number
-  posts: { _id: string; title: string; images?: string[] }[]
+  posts: {
+  _id: string
+  title: string
+  description: string
+  location: { name: string }
+  tags?: string[]
+  images?: string[]
+  likes?: string[]
+  comments?: { user: { username: string }; text: string }[]
+  createdBy: { username: string; _id?: string }
+  createdAt: string
+}[]
 }
-
 
 function FlyTo({ selected }: { selected: TrendingLocation | null }) {
   const map = useMap()

@@ -152,7 +152,7 @@
   color: #0a1f44;
 }
 
-.PassMissmatch{
+.input.PassMissmatch, .input.input.PassMissmatch:focus {
   border-color: #e24b4a;
 }
 

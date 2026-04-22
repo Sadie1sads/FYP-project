@@ -6,6 +6,7 @@ import Link from "next/link"
 import Sidebar from "../components/Sidebar"
 import axios from "axios"
 import styles from "./profile.module.css"
+import toast from "react-hot-toast"
 
 type Post = {
   _id: string
@@ -94,7 +95,7 @@ export default function ProfilePage() {
       ))
       setEditingId(null)
     } catch {
-      alert("Failed to update post.")
+      toast.error("Failed to update post.")
     } finally {
       setSaving(false)
     }

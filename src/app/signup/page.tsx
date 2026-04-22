@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import axios from "axios"
 import {toast} from "react-hot-toast"
 import { useRouter } from "next/navigation"
@@ -8,6 +8,7 @@ import Link from "next/link";
 
 export default function SignupPage() {
   const router = useRouter()
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -15,12 +16,20 @@ export default function SignupPage() {
     username: ""
   })
 
-  const [buttonDisabled, setButtonDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
-
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const passwordMissmatch = user.confirmpassword.length > 0 && user.password !== user.confirmpassword
+  const passwordMissmatch =
+    user.confirmpassword.length > 0 &&
+    user.password !== user.confirmpassword
+
+  const buttonDisabled =
+    !user.email ||
+    !user.username ||
+    !user.password ||
+    !user.confirmpassword ||
+    passwordMissmatch
 
   const onSignup = async() => {
     try{
@@ -82,14 +91,6 @@ export default function SignupPage() {
     }
   };
 
-  useEffect(()=> {
-    if (user.email.length > 0 && user.password.length>0 && user.username.length > 0){
-      setButtonDisabled(false)
-    } else {
-      setButtonDisabled(true)
-    } 
-  }, [user]);
-
   return (
     <div className={styles.page}>
 
@@ -143,9 +144,15 @@ export default function SignupPage() {
             value={user.confirmpassword}
             onChange={(e) => setUser({...user, confirmpassword: e.target.value})}
             placeholder="Confirm Password"
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             className={`${styles.input} ${passwordMissmatch ? styles.PassMissmatch : ""}`}
           />
+          <button
+          type="button"
+          className={styles.eyeButton}
+          onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+          {showConfirmPassword ? "Hide" : "Show"}
+        </button>
           </div>
           {passwordMissmatch && ( 
             <p className={styles.errorMsg}> Passwords do not match</p>

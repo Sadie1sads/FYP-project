@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import Link from 'next/link'
 import styles from './manageUsers.module.css'
+import toast from 'react-hot-toast'
 
 type User = {
     _id: string
@@ -45,7 +46,7 @@ export default function ManageUsersPage() {
             await axios.delete('/api/admin/users', { data: { userId } })
             setUsers((prev) => prev.filter((u) => u._id !== userId))
         } catch {
-            alert('Failed to delete user')
+            toast.error('Failed to delete user')
         }
     }
 

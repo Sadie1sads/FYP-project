@@ -33,7 +33,7 @@ export default function Sidebar() {
         <Link href="/inbox">
           <div className={styles.navItem}>
             <Image
-              src="/icons/NotificationIcon.svg"
+              src="/icons/InboxIcon.svg"
               alt="Notifications"
               width={24}
               height={24}
@@ -98,7 +98,7 @@ export default function Sidebar() {
         <Link href="/signup">
           <div className={styles.navItem}>
             <Image
-              src="/icons/Homeicon.svg"
+              src="/icons/signupIcon.svg"
               alt="Sign Up"
               width={24}
               height={24}

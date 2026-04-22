@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react"
 import axios from "axios"
 import styles from "./showPosts.module.css"
 import Link from "next/link"
+import toast from "react-hot-toast"
 
 type Post = {
   _id: string
@@ -35,7 +36,7 @@ export default function ShowPosts() {
       await axios.delete(`/api/Posts/${postId}`)
       setAllPosts(prev => prev.filter(p => p._id !== postId))
     } catch {
-      alert('Failed to delete post.')
+      toast.error('Failed to delete post.')
     }
   }
 

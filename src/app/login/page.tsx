@@ -11,11 +11,13 @@ export default function LoginPage() {
   const [user, setUser] = useState({ email: "", password: "" })
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const onLogin = async () => {
     try {
       setLoading(true)
       const response = await axios.post("/api/users/login", user, { timeout: 15000 })
+      router.refresh()
       if (response.data?.user?.isAdmin) {
         router.push("/admin")
       } else {
@@ -41,7 +43,6 @@ export default function LoginPage() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !buttonDisabled && !loading) onLogin()
   }
-
   useEffect(() => {
     setButtonDisabled(user.email.length === 0 || user.password.length === 0)
   }, [user])
@@ -69,16 +70,21 @@ export default function LoginPage() {
             placeholder="Email"
             className={styles.input}
           />
-
+          <div className={styles.showHide}>
           <input
             id="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
             onKeyDown={handleKeyDown}
             placeholder="Password"
             className={styles.input}
           />
+          <button type="button" className={styles.eyeButton}
+          onClick={() => setShowPassword(!showPassword)}>
+            {showPassword? "Hide": "Show"}
+          </button>
+          </div>
 
           <div className={styles.actions}>
             <button

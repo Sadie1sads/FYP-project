@@ -2,9 +2,9 @@ import { connect } from '@/dbConnection/dbConnection'
 import TravelPost from '@/models/createTravelPost'
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
 
 connect()
-
 export async function POST(
     request: NextRequest,
     { params }: { params: Promise<{ postId: string }> }
@@ -33,7 +33,7 @@ export async function POST(
             post.likes?.splice(likeIdx, 1)
         } else {
             if (!post.likes) post.likes = []
-            post.likes.push(userId)
+            post.likes.push(new mongoose.Types.ObjectId(decoded.id))
         }
         await post.save()
 

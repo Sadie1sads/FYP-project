@@ -81,7 +81,7 @@ export default function CreatePostPage() {
         const uploaded = await startUpload(imageFiles)
         imageUrls = uploaded?.map((u) => u.url) ?? []
 
-        console.log('uploaded URLs:', imageUrls)  // ← add this
+        console.log('uploaded URLs:', imageUrls)
       }
 
       const coords = await getCoordinates(postData.location)

@@ -2,6 +2,7 @@ import { connect } from '@/dbConnection/dbConnection'
 import Wishlist from '@/models/wishlistModel'
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
 
 connect()
 
@@ -17,16 +18,15 @@ export async function GET(request: NextRequest) {
             process.env.TOKEN_SECRET!
         ) as { id: string }
 
-        let list = await Wishlist.findOne({ userId: decoded.id }).lean()
-        if (!list) {
-            list = { locations: [], posts: [], userId: decoded.id }
-        }
+        const list = await Wishlist.findOne({
+            userId: new mongoose.Types.ObjectId(decoded.id)
+        }).lean()
 
         return NextResponse.json({
             success: true,
             wishlist: {
-                locations: list.locations || [],
-                posts: list.posts || [],
+                locations: list?.locations || [],
+                posts: list?.posts || [],
             },
         })
     } catch (error: unknown) {

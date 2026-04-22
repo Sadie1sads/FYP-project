@@ -9,11 +9,9 @@ export default function LandingPage() {
 
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
-          <h1>Welcome to Voyage Verse</h1>
-          <h2>Discover & Share Amazing Places</h2>
+          <h1>VoyageVerse is a Travel experience sharing Platform</h1>
           <p>
-            Create posts, explore trending destinations,
-            and get notified about your wishlist locations.
+            Inspire others, discover new places, keep track of your favorite destinations <br />and travel with us joining travel packages to trending locations
           </p>
           <Link href="/signup" className={styles.getStartedBtn}>
           Get Started
